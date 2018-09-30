@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
 import ListView from '../components/ListView';
 import LoadingBlock from '../components/LoadingBlock';
@@ -10,7 +10,7 @@ import { getDocuments } from '../services/http';
 class DocListPanel extends React.Component {
   state = {
     showLoading: false,
-    list: []
+    list: [],
   };
 
   onSelectHandler = (item) => {
