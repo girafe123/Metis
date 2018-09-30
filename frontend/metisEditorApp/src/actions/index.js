@@ -22,8 +22,8 @@ export function updateDocTitle(title) {
 }
 
 
-export function setActiveDoc(doc) {
+export function setActiveDoc(docId) {
   return { type: SET_ACTIVE_DOC, payload: {
-    doc
+    docId
   }};
 }

@@ -5,11 +5,11 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/3024-day.css';
 import '../scss/style.scss';
 
-export default class Editor extends React.Component {
-  constructor(props) {
-    super(props);
-    this.hostEle = React.createRef();
+export default class Editor extends React.PureComponent {
+  static defaultProps = {
+    value: '',
   }
+  hostEle = React.createRef();
   componentDidMount() {
     this.editor = CodeMirror(this.hostEle.current, {
       mode: 'markdown',
@@ -21,6 +21,11 @@ export default class Editor extends React.Component {
       this.props.onChange(value);
     })
   }
+
+  componentWillUnmount() {
+    this.editor = null;
+  }
+
   render() {
     return <div ref={this.hostEle} className="me-editor"></div>;
   }

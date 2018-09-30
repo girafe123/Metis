@@ -2,19 +2,14 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux'
 
 class ListItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.clickHandler = this.clickHandler.bind(this);
-  }
-
-  clickHandler() {
+  clickHandler = () => {
     const { onClick, item } = this.props;
     onClick(item);
   }
 
   render() {
-    const { item } = this.props;
-    return <li className="me-doc-item">
+    const { item, active } = this.props;
+    return <li className={`me-doc-item ${active ? 'active' : ''}`}>
       <a onClick={this.clickHandler}>
         <header>{item.title}</header>
       </a>
@@ -30,15 +25,17 @@ export default class ListView extends React.Component {
   }
 
   clickHandler(item) {
-    const { onSelect } = this.props;
-    onSelect(item);
+    const { onSelect, value } = this.props;
+    if (item.id !== value) {
+      onSelect(item);
+    }
   }
 
   render() {
-    const { list } = this.props;
+    const { list, value } = this.props;
     return <ul className="me-doc-list">
       {
-        list.map(item => <ListItem item={item} key={item.id} onClick={this.clickHandler}/>)
+        list.map(item => <ListItem item={item} active={ value === item.id } key={item.id} onClick={this.clickHandler}/>)
       }
     </ul>;
   }

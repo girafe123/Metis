@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
 import { render } from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import createSagaMiddleware from 'redux-saga';
+import '@babel/polyfill';
 
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,7 +11,9 @@ import '@fortawesome/fontawesome-free/css/all.css';
 
 import App from './App';
 import rootReducer from './reducers';
+import saga from './saga';
 
+const sagaMiddleware = createSagaMiddleware();
 let store = createStore(rootReducer,
   {
     mode: 'edit',
@@ -50,27 +54,12 @@ let store = createStore(rootReducer,
       name: 'folder 3',
       children: []
     }],
-    docList: [{
-      id: 1,
-      title: 'xxxx1',
-      content: '# 333333',
-      type: 'md',
-    },{
-      id: 2,
-      title: 'xxxx2',
-      content: '# 333333',
-      type: 'md',
-    }],
-    currentDoc: {
-      id: 1,
-      title: 'xxxx1',
-      content: '# 333333',
-      type: 'md',
-    },
+    docList: [],
+    currentDocId: null,
   },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-
 );
+//sagaMiddleware.run(saga)
 
 render(
   <Provider store={store}>

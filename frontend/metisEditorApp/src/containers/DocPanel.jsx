@@ -7,16 +7,22 @@ import Previewer from '../components/Previewer';
 import LoadingBlock from '../components/LoadingBlock';
 
 import { switchMode, updateDocContent, updateDocTitle } from '../actions';
+import { getDocument, updateDocument } from '../services/http';
 
 class DocPanel extends React.Component {
   state = {
     isSaveLoading: false,
     isDocLoading: false,
+    doc: null,
   };
 
   onChangeHandler = (v) => {
-    const { dispatch } = this.props;
-    dispatch(updateDocContent(v));
+    this.setState({
+      doc: {
+        ...this.state.doc,
+        content: v,
+      },
+    });
   };
 
   onSwitchHandler = (v) => {
@@ -25,30 +31,56 @@ class DocPanel extends React.Component {
   };
 
   onTitleChangeHandler = (v) => {
-    const { dispatch } = this.props;
-    dispatch(updateDocTitle(v));
+    this.setState({
+      doc: {
+        ...this.state.doc,
+        title: v,
+      },
+    });
   };
 
   onSaveHandler = () => {
     this.setState({
       isSaveLoading: true,
-      isDocLoading: true,
     });
 
-    setTimeout(() => {
+    updateDocument(this.state.doc).then((doc) => {
       this.setState({
         isSaveLoading: false,
-        isDocLoading: false,
+        doc,
       });
-    }, 10000);
+    })
+  }
+
+  renderEmpty() {
+    return <div>empty</div>
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.docId !== this.props.docId) {
+      this.setState({
+        isDocLoading: true,
+      });
+      getDocument(this.props.docId).then((doc) => {
+        this.setState({
+          doc,
+          isDocLoading: false,
+        });
+      });
+    }
   }
 
   render() {
-    const { doc, mode } = this.props;
-    const { isSaveLoading, isDocLoading } = this.state;
+    const { mode } = this.props;
+    const { isSaveLoading, isDocLoading, doc } = this.state;
+
+    if (!doc) {
+      return this.renderEmpty();
+    }
+
     const docComponent = mode === 'preview' ? 
       <Previewer value={doc.content} /> : 
-      <Editor value={doc.content} onChange={this.onChangeHandler}/>;
+      <Editor key={doc.id} value={doc.content} onChange={this.onChangeHandler}/>;
 
     return(<Fragment>
       <LoadingBlock loading={isDocLoading} className="me-doc-container">
@@ -68,7 +100,7 @@ class DocPanel extends React.Component {
 
 export default connect((state, props) => {
   return {
-    doc: state.currentDoc,
+    docId: state.currentDocId,
     mode: state.mode,
   };
 })(DocPanel);

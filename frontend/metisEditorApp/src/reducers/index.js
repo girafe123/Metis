@@ -27,7 +27,7 @@ export default function rootReducer(state, action) {
     case SET_ACTIVE_DOC:
       return {
         ...state,
-        currentDoc: action.payload.doc,
+        currentDocId: action.payload.docId,
       }
     default:
       return state
