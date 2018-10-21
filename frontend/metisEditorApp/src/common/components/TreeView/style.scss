@@ -1,0 +1,37 @@
+.me-tree-view {
+  .me-tree-node {
+    list-style-type: none;
+    padding: 0 0 0 10px;
+    user-select: none;
+
+    li {
+      line-height: 30px;
+      
+      header {
+        position: relative;
+        padding: 0 10px 0 45px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #ddd
+        }
+
+        .me-tree-toggle {
+          position: absolute;
+          left: 5px;
+          line-height: 30px;
+          width: 15px;
+          text-align: center;
+          cursor: pointer;
+        }
+
+        > .far {
+          position: absolute;
+          left: 25px;
+          line-height: 30px;
+          width: 15px;
+        }
+      }
+    }
+  }
+}

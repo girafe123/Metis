@@ -1,0 +1,24 @@
+@import '../common/scss/vars';
+
+.me-doc-container {
+  padding: $tool-bar-height 15% 0 15%;
+}
+
+.me-tool-bar {
+  width: 70%;
+  position: absolute;
+  top: 0;
+  left: 15%;
+  border-style: solid;
+  border-color: #eee;
+  border-width: 0 0 1px 0;
+  overflow: hidden;
+
+  button {
+    font-size: 16px;
+  }
+
+  .me-tool-doc-title {
+    padding-top: 18px;
+  }
+}

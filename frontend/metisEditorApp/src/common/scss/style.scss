@@ -1,0 +1,51 @@
+@import 'vars';
+
+html, body {
+  height: 100%;
+}
+
+button {
+  outline: none !important;
+}
+
+.me-app {
+  height: 100%;
+}
+
+.me-main {
+  padding-top: $menu-bar-height;
+  height: 100%;
+}
+
+.me-panel {
+  border-right: 1px solid #eee;
+  padding: 0;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+.sync-animation {
+  animation: 1.5s infinite linear rotate;
+}
+
+.me-toolbar {
+  padding: 5px 10px;
+  text-align: right;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  button {
+    font-size: 16px;
+    outline: none
+  }
+}
+
+.material-icons {
+  color: $icon-color;
+}

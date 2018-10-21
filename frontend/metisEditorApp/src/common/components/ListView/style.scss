@@ -1,0 +1,36 @@
+.me-doc-list {
+  padding: 0;
+  list-style: none;
+  margin: 0;
+
+  .me-doc-item {
+    border-style: solid;
+    border-color: #eee;
+    border-width: 0 0 1px 0;
+    padding-left: 10px;
+    &.active {
+      background-color: rgba(86, 61, 124, 0.5) !important;
+      color: #fff;
+    }
+
+    &:hover {
+      background-color: #ddd
+    }
+
+    a {
+      display: block;
+      height: 80px;
+      cursor: pointer;
+
+      header {
+        line-height: 30px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      p {
+        line-height: 25px;
+      }
+    }
+  }
+}
