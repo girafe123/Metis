@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 export default class ListItem extends React.PureComponent {
   clickHandler = () => {
@@ -16,8 +17,11 @@ export default class ListItem extends React.PureComponent {
 
   render() {
     const { item, active } = this.props;
+    const className = classNames({
+      active,
+    }, 'me-doc-item');
     return (
-      <li className={`me-doc-item ${active ? 'active' : ''}`} onContextMenu={this.contextMenuHandler}>
+      <li className={className} onContextMenu={this.contextMenuHandler}>
         <a onClick={this.clickHandler}>
           <header>{item.title}</header>
         </a>

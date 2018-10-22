@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
@@ -7,15 +8,18 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 const LoadingButton = (props) => {
   const { loading, icon, onClick, disabled, text } = props;
-  const iconClass = loading ? 'fas fa-sync-alt sync-animation' : icon;
+  const iconClass = classNames({
+    'fas fa-sync-alt sync-animation': loading,
+    [icon]: !loading,
+  });
   const tooltip = loading ? '同步中' : text;
   return (
     <Tooltip title={tooltip}>
-      <label>
+      <span>
         <IconButton onClick={onClick} disabled={disabled}>
           <Icon className={iconClass} fontSize="inherit" />
         </IconButton>
-      </label>
+      </span>
     </Tooltip>
   );
 };

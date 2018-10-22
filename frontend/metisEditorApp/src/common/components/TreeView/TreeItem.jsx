@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 const ToggleIcon = (props) => {
   const { open, onClick, className } = props;
-  const icon = open ? 'fa-caret-down' : 'fa-caret-right';
-  return (<a onClick={onClick} className={className}><i className={`fas ${icon}`} /></a>);
+  const iconClassName = classNames({
+    'fa-caret-down': open,
+    'fa-caret-right': !open,
+  }, 'fas');
+  return (<a onClick={onClick} className={className}><i className={iconClassName} /></a>);
 };
 
 ToggleIcon.propTypes = {
@@ -80,13 +84,19 @@ export default class TreeItem extends React.PureComponent {
     const { expandChildren } = this.state;
     const hasChildren = node.children && node.children.length > 0;
 
-    const icon = expandChildren ? 'fa-folder-open' : 'fa-folder';
+    const iconClassName = classNames({
+      'fa-folder-open': expandChildren,
+      'fa-folder': !expandChildren,
+    }, 'far');
 
+    const activeClassName = classNames({
+      active: node.id === activeNodeId,
+    });
     return (
       <li>
-        <header onClick={this.onClickHander} onContextMenu={this.contextMenuHandler} className={node.id === activeNodeId ? 'active' : ''}>
+        <header onClick={this.onClickHander} onContextMenu={this.contextMenuHandler} className={activeClassName}>
           { hasChildren ? <ToggleIcon className="me-tree-toggle" open={expandChildren} onClick={this.onExpandHandler} /> : null }
-          <i className={`far ${icon}`} />
+          <i className={iconClassName} />
           <span className="me-tree-title">{ node.name }</span>
         </header>
         { this.renderChildren() }
