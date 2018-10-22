@@ -1,6 +1,5 @@
 export const GET_DOCUMENT_LIST = 'GET_DOCUMENT_LIST';
 export const GET_DOCUMENT_LIST_SUCCEEDED = 'GET_DOCUMENT_LIST_SUCCEEDED';
-export const GET_DOCUMENT_LIST_FAILED = 'GET_DOCUMENT_LIST_FAILED';
 export function getDocuments(folderId) {
   return {
     type: GET_DOCUMENT_LIST,
@@ -27,7 +26,6 @@ export function createDocument(doc) {
 
 export const GET_DOCUMENT = 'GET_DOCUMENT';
 export const GET_DOCUMENT_SUCCEEDED = 'GET_DOCUMENT_SUCCEEDED';
-export const GET_DOCUMENT_FAILED = 'GET_DOCUMENT_FAILED';
 export function getDocument(docId) {
   return {
     type: GET_DOCUMENT,

@@ -10,13 +10,8 @@ import {
   updateFolder,
 } from '../common/services/http';
 import {
-  showMessage,
-  hideMessage,
-} from '../common/actions';
-import {
   GET_FOLDERS,
   GET_FOLDERS_SUCCEEDED,
-  GET_FOLDERS_FAILED,
   CREATE_FOLDER,
   CREATE_FOLDER_SUCCEEDED,
   DELETE_FOLDER,
@@ -25,6 +20,8 @@ import {
   UPDATE_FOLDER_SUCCEEDED,
   toggleFoldersLoading,
 } from './actions';
+import { showMessage } from '../common/actions';
+import { MessageType } from '../common/utils/Enums';
 
 function* getFoldersList() {
   try {
@@ -37,10 +34,7 @@ function* getFoldersList() {
       },
     });
   } catch (e) {
-    yield put({
-      type: GET_FOLDERS_FAILED,
-      message: e.message,
-    });
+    yield put(showMessage('加载文件夹列表失败', MessageType.Error));
   } finally {
     yield put(toggleFoldersLoading(false));
   }
@@ -56,8 +50,9 @@ function* createFolderHandler(action) {
         folder,
       },
     });
-    yield put(showMessage('保存成功'));
+    yield put(showMessage('创建文件夹成功', MessageType.Success));
   } catch (e) {
+    yield put(showMessage('创建文件夹失败', MessageType.Error));
   } finally {
     yield put(toggleFoldersLoading(false));
   }
@@ -73,9 +68,9 @@ function* deleteFolderHandler(action) {
         folderId: action.payload.folderId,
       },
     });
-    yield put(showMessage('删除成功', 'success'));
+    yield put(showMessage('删除文件夹成功', MessageType.Success));
   } catch (e) {
-
+    yield put(showMessage('删除文件夹失败', MessageType.Error));
   } finally {
     yield put(toggleFoldersLoading(false));
   }
@@ -91,8 +86,9 @@ function* updateFolderHandler(action) {
         folder,
       },
     });
-    yield put(showMessage('保存成功'));
+    yield put(showMessage('更新文件夹成功', MessageType.Success));
   } catch (e) {
+    yield put(showMessage('更新文件夹失败', MessageType.Error));
   } finally {
     yield put(toggleFoldersLoading(false));
   }

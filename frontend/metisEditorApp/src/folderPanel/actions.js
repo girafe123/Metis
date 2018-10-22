@@ -1,6 +1,5 @@
 export const GET_FOLDERS = 'GET_FOLDERS';
 export const GET_FOLDERS_SUCCEEDED = 'GET_FOLDERS_SUCCEEDED';
-export const GET_FOLDERS_FAILED = 'GET_FOLDERS_FAILED';
 export function getFolders() {
   return {
     type: GET_FOLDERS,
