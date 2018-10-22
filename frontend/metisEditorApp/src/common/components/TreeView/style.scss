@@ -12,9 +12,6 @@
         position: relative;
         padding: 0 10px 0 45px;
         cursor: pointer;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
 
         &.active {
           background-color: rgba(86, 61, 124, 0.5) !important;

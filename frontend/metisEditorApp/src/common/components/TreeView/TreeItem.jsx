@@ -91,7 +91,7 @@ export default class TreeItem extends React.PureComponent {
 
     const activeClassName = classNames({
       active: node.id === activeNodeId,
-    });
+    }, 'text-ellipsis');
     return (
       <li>
         <header onClick={this.onClickHander} onContextMenu={this.contextMenuHandler} className={activeClassName}>

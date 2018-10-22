@@ -1,6 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+import { DocumentType } from '../../utils/Enums';
+
+const DocumentTypeIcons = {
+  [DocumentType.Markdown]: 'fab fa-markdown',
+};
 
 export default class ListItem extends React.PureComponent {
   clickHandler = () => {
@@ -23,7 +30,11 @@ export default class ListItem extends React.PureComponent {
     return (
       <li className={className} onContextMenu={this.contextMenuHandler}>
         <a onClick={this.clickHandler}>
-          <header>{item.title}</header>
+          <header className="text-ellipsis">{item.title}</header>
+          <p>
+            <i className={DocumentTypeIcons[item.type]}></i>
+            <span className="me-doc-time">{moment(item.updateTime).fromNow()}</span>
+          </p>
         </a>
       </li>
     );

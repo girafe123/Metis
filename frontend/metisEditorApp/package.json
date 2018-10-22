@@ -41,6 +41,7 @@
     "codemirror": "^5.40.2",
     "immutability-helper": "^2.8.1",
     "marked": "^0.5.1",
+    "moment": "^2.22.2",
     "perfect-scrollbar": "^1.4.0",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",

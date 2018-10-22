@@ -67,3 +67,13 @@ $i: 12;
 .text-center {
   text-align: center;
 }
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.float-right {
+  float: right;
+}
