@@ -3,6 +3,7 @@
     list-style-type: none;
     padding: 0 0 0 10px;
     user-select: none;
+    margin: 0;
 
     li {
       line-height: 30px;
@@ -11,7 +12,14 @@
         position: relative;
         padding: 0 10px 0 45px;
         cursor: pointer;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 
+        &.active {
+          background-color: rgba(86, 61, 124, 0.5) !important;
+          color: #fff;
+        }
         &:hover {
           background-color: #ddd
         }

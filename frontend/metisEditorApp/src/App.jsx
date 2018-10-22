@@ -1,10 +1,9 @@
 import React, { Fragment } from 'react';
-import { createPortal } from 'react-dom';
 import { connect } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
-// import Snackbar from '@material-ui/core/Snackbar';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
-import ContextMenu from './common/components/ContextMenu';
 import ContextMenuContext from './common/contexts/ContextMenuContext';
 import Snackbar from './common/components/Snackbar';
 
@@ -17,16 +16,8 @@ import { hideMessage } from './common/actions';
 import './common/scss/style.scss';
 
 class App extends React.Component {
-  popoverDom = document.querySelector('#popover');
-
-  contextMenuRef = React.createRef();
-
   state = {
     contextMenu: null,
-  }
-
-  componentDidMount() {
-    document.addEventListener('click', this.captureCloseContextMenu, true);
   }
 
   showContextMenu = (x, y, options) => {
@@ -43,36 +34,37 @@ class App extends React.Component {
     });
   }
 
-  captureCloseContextMenu = (e) => {
-    const host = this.contextMenuRef.current;
-    if (host && host.contains(e.target)) {
-      return;
-    }
-
-    this.closeContextMenu();
-  }
-
   closeSnackbar = () => {
     const { dispatch } = this.props;
-
     dispatch(hideMessage());
   }
 
   renderContextMenu() {
     const { contextMenu } = this.state;
-
     if (contextMenu) {
-      return createPortal(
-        <ContextMenu
-          contextMenuRef={this.contextMenuRef}
-          options={contextMenu.options}
-          afterAction={this.closeContextMenu}
-          x={contextMenu.x}
-          y={contextMenu.y}
-        />, this.popoverDom,
-      );
+      return (
+        <Menu
+          anchorPosition={{ left: contextMenu.x, top: contextMenu.y }}
+          open
+          anchorOrigin={{
+            horizontal: 'left',
+            vertical: 'top',
+          }}
+          anchorReference="anchorPosition"
+          onClose={this.closeContextMenu}>
+          {
+            contextMenu.options.map(option => (
+              <MenuItem
+                key={option.label}
+                onClick={() => {
+                  option.action();
+                  this.closeContextMenu();
+                }}>
+                {option.label}
+              </MenuItem>))
+          }
+        </Menu>);
     }
-
     return null;
   }
 
@@ -99,7 +91,7 @@ class App extends React.Component {
         <CssBaseline />
         <MenuBar />
         <ContextMenuContext.Provider value={{ showContextMenu: this.showContextMenu }}>
-          <main className="me-main container-fluid row">
+          <main className="me-main row">
             <div className="col-2 me-panel">
               <FolderTreePanel />
             </div>

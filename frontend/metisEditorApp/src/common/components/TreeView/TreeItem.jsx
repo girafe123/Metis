@@ -23,12 +23,14 @@ export default class TreeItem extends React.PureComponent {
   static defaultProps = {
     onSelect: () => null,
     onContextMenu: () => null,
+    activeNodeId: null,
   };
 
   static propTypes = {
     node: PropTypes.object.isRequired,
     onSelect: PropTypes.func,
     onContextMenu: PropTypes.func,
+    activeNodeId: PropTypes.number,
   };
 
   state = {
@@ -58,13 +60,13 @@ export default class TreeItem extends React.PureComponent {
   }
 
   renderChildren() {
-    const { node: { children }, onSelect, onContextMenu } = this.props;
+    const { node: { children }, onSelect, onContextMenu, activeNodeId } = this.props;
     const { expandChildren } = this.state;
     if (expandChildren && children && children.length > 0) {
       return (
         <ul className="me-tree-node">
           {
-            children.map(node => <TreeItem key={node.id} node={node} onSelect={onSelect} onContextMenu={onContextMenu} />)
+            children.map(node => <TreeItem key={node.id} node={node} onSelect={onSelect} onContextMenu={onContextMenu} activeNodeId={activeNodeId} />)
           }
         </ul>
       );
@@ -74,14 +76,15 @@ export default class TreeItem extends React.PureComponent {
   }
 
   render() {
-    const { node } = this.props;
+    const { node, activeNodeId } = this.props;
     const { expandChildren } = this.state;
     const hasChildren = node.children && node.children.length > 0;
 
     const icon = expandChildren ? 'fa-folder-open' : 'fa-folder';
+
     return (
       <li>
-        <header onClick={this.onClickHander} onContextMenu={this.contextMenuHandler} className="text-truncate">
+        <header onClick={this.onClickHander} onContextMenu={this.contextMenuHandler} className={node.id === activeNodeId ? 'active' : ''}>
           { hasChildren ? <ToggleIcon className="me-tree-toggle" open={expandChildren} onClick={this.onExpandHandler} /> : null }
           <i className={`far ${icon}`} />
           <span className="me-tree-title">{ node.name }</span>

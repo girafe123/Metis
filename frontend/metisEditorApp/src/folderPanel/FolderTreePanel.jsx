@@ -92,7 +92,7 @@ class FolderTreePanel extends React.Component {
   };
 
   render() {
-    const { folders, showLoading } = this.props;
+    const { folders, showLoading, currentFolder } = this.props;
     const { editingFolderModel, title } = this.state;
 
     return (
@@ -125,6 +125,7 @@ class FolderTreePanel extends React.Component {
                     onContextMenu={(x, y, node) => {
                       showContextMenu(x, y, this.getContextMenuOptions(node));
                     }}
+                    activeNodeId={currentFolder ? currentFolder.id : null}
                   />) : <EmptyPanel text="没有任何文件夹" icon="far fa-folder" />
               )
             }
@@ -139,5 +140,6 @@ export default connect((state) => {
   return {
     folders: state.editor.folderList,
     showLoading: state.editorState.isFolderListLoading,
+    currentFolder: state.editor.currentFolder,
   };
 })(FolderTreePanel);

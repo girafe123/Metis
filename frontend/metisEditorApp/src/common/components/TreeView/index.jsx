@@ -10,22 +10,24 @@ export default class TreeView extends React.PureComponent {
     nodes: [],
     onSelect: () => null,
     onContextMenu: () => null,
+    activeNodeId: null,
   };
 
   static propTypes = {
     nodes: PropTypes.array,
     onSelect: PropTypes.func,
     onContextMenu: PropTypes.func,
+    activeNodeId: PropTypes.number,
   };
 
   render() {
-    const { nodes, onSelect, onContextMenu } = this.props;
+    const { nodes, onSelect, onContextMenu, activeNodeId } = this.props;
     return (
       <Scrollbar>
         <div className="me-tree-view">
           <ul className="me-tree-node">
             {
-              nodes.map(node => <TreeItem key={node.id} node={node} onSelect={onSelect} onContextMenu={onContextMenu} />)
+              nodes.map(node => <TreeItem key={node.id} node={node} onSelect={onSelect} onContextMenu={onContextMenu} activeNodeId={activeNodeId} />)
             }
           </ul>
         </div>

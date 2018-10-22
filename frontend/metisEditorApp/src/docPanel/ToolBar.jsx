@@ -66,7 +66,7 @@ export default class ToolBar extends React.PureComponent {
               fullWidth
             />
           </div>
-          <div className="col-3">
+          <div className="col-3 text-center">
             <FormControlLabel
               control={(
                 <Switch
@@ -78,7 +78,7 @@ export default class ToolBar extends React.PureComponent {
               label="公开的"
             />
           </div>
-          <div className="col-3 text-right pt-2">
+          <div className="col-3 me-tool-doc-btns">
             <LoadingButton icon="far fa-save" text="保存" loading={isSaveLoading} onClick={this.onSave} disabled={isSaveDisabled} />
             <ToggleButton options={editOptions} value={mode} onChange={onSwitch} />
           </div>

@@ -49,3 +49,21 @@ button {
 .material-icons {
   color: $icon-color;
 }
+
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+$i: 12;
+@while $i > 0 {
+  .col-#{$i} { 
+    flex: $i;
+    width: 100%/12*$i
+  }
+  $i: $i - 1;
+}
+
+.text-center {
+  text-align: center;
+}
