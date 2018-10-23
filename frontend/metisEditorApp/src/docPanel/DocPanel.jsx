@@ -20,6 +20,7 @@ class DocPanel extends React.Component {
         content: props.doc.content,
         id: props.doc.id,
         isPublic: props.doc.isPublic,
+        isDirty: false,
       };
     }
 
@@ -73,6 +74,25 @@ class DocPanel extends React.Component {
     const { doc: { type } } = this.props;
     const { title, content } = this.state;
     downloadFile(title, content, type);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { dispatch, doc } = this.props;
+    if (prevState.id && doc.id !== prevState.id && prevState.isDirty) {
+
+      const { title, content, id, isPublic } = prevState;
+      dispatch(updateDocument({ title, content, id, isPublic }));
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener('beforeunload ', (e) => {
+      const event = e || window.event;
+      if (this.state.isDirty && event) {
+        e.returnValue = '有未同步的改动请先提交';
+      }
+      return '有未同步的改动请先提交';
+    });
   }
 
   render() {
