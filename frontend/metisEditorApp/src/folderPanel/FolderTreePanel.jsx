@@ -7,7 +7,7 @@ import Icon from '@material-ui/core/Icon';
 import TreeView from '../common/components/TreeView';
 import LoadingBlock from '../common/components/LoadingBlock';
 import EmptyPanel from '../common/components/EmptyPanel';
-
+import ConfirmDialog from '../common/components/ConfirmDialog';
 import ContextMenuContext from '../common/contexts/ContextMenuContext';
 import FolderFormDialog from './FolderFormDialog';
 import { getFolders, createFolder, deleteFolder, updateFolder, setActiveFolder } from './actions';
@@ -18,6 +18,7 @@ class FolderTreePanel extends React.Component {
   state = {
     editingFolderModel: null,
     title: '',
+    confirmDialog: null,
   }
 
   componentDidMount() {
@@ -38,7 +39,7 @@ class FolderTreePanel extends React.Component {
     return [
       { label: '新建文件夹', action: this.createFolder(node.id) },
       { label: '编辑文件夹', action: this.updateFolder(node) },
-      { label: '删除文件夹', action: this.deleteFolder(node.id) },
+      { label: '删除文件夹', action: this.deleteFolder(node) },
     ];
   };
 
@@ -60,9 +61,13 @@ class FolderTreePanel extends React.Component {
     });
   };
 
-  deleteFolder = id => () => {
-    const { dispatch } = this.props;
-    dispatch(deleteFolder(id));
+  deleteFolder = folder => () => {
+    this.setState({
+      confirmDialog: {
+        id: folder.id,
+        msg: `确定要删除 ${folder.name} 吗?`,
+      },
+    });
   };
 
   createRootFolderModal = () => {
@@ -90,6 +95,34 @@ class FolderTreePanel extends React.Component {
       dispatch(createFolder(data));
     }
   };
+
+  onConfirmDialogOK = () => {
+    const { dispatch } = this.props;
+    dispatch(deleteFolder(this.state.confirmDialog.id));
+    this.onConfirmDialogCancel();
+  };
+
+  onConfirmDialogCancel = () => {
+    this.setState({
+      confirmDialog: null,
+    });
+  };
+
+  renderConfirmDialog() {
+    if (this.state.confirmDialog) {
+      return (
+        <ConfirmDialog
+          open
+          title="警告"
+          message={this.state.confirmDialog.msg}
+          onOk={this.onConfirmDialogOK}
+          onCancel={this.onConfirmDialogCancel}
+        />
+      );
+    }
+
+    return null;
+  }
 
   render() {
     const { folders, showLoading, currentFolder } = this.props;
@@ -131,6 +164,7 @@ class FolderTreePanel extends React.Component {
             }
           </ContextMenuContext.Consumer>
         </div>
+        { this.renderConfirmDialog() }
       </LoadingBlock>
     );
   }
