@@ -6,6 +6,7 @@ import Editor from '../common/components/Editor';
 import Previewer from '../common/components/Previewer';
 import LoadingBlock from '../common/components/LoadingBlock';
 import EmptyPanel from '../common/components/EmptyPanel';
+import { downloadFile } from '../common/utils/utils';
 
 import { switchMode, updateDocument } from './actions';
 
@@ -68,20 +69,22 @@ class DocPanel extends React.Component {
     });
   }
 
+  onDownloadHandler = () => {
+    const { doc: { type } } = this.props;
+    const { title, content } = this.state;
+    downloadFile(title, content, type);
+  }
+
   render() {
     const { mode, isSaveLoading, isDocLoading, doc } = this.props;
     const { title, content, isDirty, isPublic } = this.state;
+
+    let inner;
     if (!doc) {
-      return <EmptyPanel text="当前没有选择文档" icon="far fa-sticky-note" />;
-    }
-
-    const docComponent = mode === 'preview'
-      ? <Previewer value={content} />
-      : <Editor key={doc.id} value={content} onChange={this.onChangeHandler} />;
-
-    return (
-      <Fragment>
-        <LoadingBlock loading={isDocLoading} className="me-doc-container">
+      inner = <EmptyPanel text="当前没有选择文档" icon="far fa-sticky-note" />;
+    } else {
+      inner = (
+        <Fragment>
           <ToolBar
             onSwitch={this.onSwitchHandler}
             onTitleChange={this.onTitleChangeHandler}
@@ -92,10 +95,21 @@ class DocPanel extends React.Component {
             isSaveDisabled={!isDirty}
             isPublic={isPublic}
             onIsPublicChange={this.onIsPublicChangeHandler}
+            onDownload={this.onDownloadHandler}
           />
-          { docComponent }
-        </LoadingBlock>
-      </Fragment>
+          {
+            mode === 'preview'
+              ? <Previewer value={content} />
+              : <Editor key={doc.id} value={content} onChange={this.onChangeHandler} />
+          }
+        </Fragment>
+      );
+    }
+
+    return (
+      <LoadingBlock loading={isDocLoading} className="me-doc-container">
+        { inner }
+      </LoadingBlock>
     );
   }
 }

@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import Icon from '@material-ui/core/Icon';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import ToggleButton from '../common/components/ToggleButton';
 import LoadingButton from '../common/components/LoadingButton';
@@ -24,6 +27,7 @@ export default class ToolBar extends React.PureComponent {
     onTitleChange: () => null,
     onSave: () => null,
     onSwitch: () => null,
+    onDownload: () => null,
     mode: 'edit',
     isSaveLoading: false,
     isSaveDisabled: false,
@@ -32,6 +36,7 @@ export default class ToolBar extends React.PureComponent {
   static propTypes = {
     title: PropTypes.string,
     onTitleChange: PropTypes.func,
+    onDownload: PropTypes.func,
     onSave: PropTypes.func,
     onSwitch: PropTypes.func,
     mode: PropTypes.string,
@@ -55,7 +60,7 @@ export default class ToolBar extends React.PureComponent {
   };
 
   render() {
-    const { title, mode, isSaveLoading, onSwitch, isSaveDisabled, isPublic } = this.props;
+    const { title, mode, isSaveLoading, onSwitch, isSaveDisabled, isPublic, onDownload } = this.props;
     return (
       <div className="me-tool-bar">
         <div className="row">
@@ -79,6 +84,11 @@ export default class ToolBar extends React.PureComponent {
             />
           </div>
           <div className="col-3 me-tool-doc-btns">
+            <Tooltip title="导出">
+              <IconButton onClick={onDownload}>
+                <Icon className="fas fa-download" fontSize="inherit" />
+              </IconButton>
+            </Tooltip>
             <LoadingButton icon="far fa-save" text="保存" loading={isSaveLoading} onClick={this.onSave} disabled={isSaveDisabled} />
             <ToggleButton options={editOptions} value={mode} onChange={onSwitch} />
           </div>
