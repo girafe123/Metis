@@ -92,12 +92,19 @@ export default class TreeItem extends React.PureComponent {
     const activeClassName = classNames({
       active: node.id === activeNodeId,
     }, 'text-ellipsis');
+
+    const isPublicClassName = classNames({
+      'far fa-eye': node.isPublic,
+      'far fa-eye-slash': !node.isPublic,
+    }, 'me-tree-is-public');
     return (
       <li>
         <header onClick={this.onClickHander} onContextMenu={this.contextMenuHandler} className={activeClassName}>
           { hasChildren ? <ToggleIcon className="me-tree-toggle" open={expandChildren} onClick={this.onExpandHandler} /> : null }
           <i className={iconClassName} />
           <span className="me-tree-title">{ node.name }</span>
+
+          <i className={isPublicClassName} />
         </header>
         { this.renderChildren() }
       </li>

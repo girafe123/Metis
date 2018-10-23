@@ -7,7 +7,9 @@ import { DocumentType } from '../../utils/Enums';
 
 const DocumentTypeIcons = {
   [DocumentType.Markdown]: 'fab fa-markdown',
+  unknown: 'far fa-question-circle',
 };
+
 
 export default class ListItem extends React.PureComponent {
   clickHandler = () => {
@@ -27,14 +29,23 @@ export default class ListItem extends React.PureComponent {
     const className = classNames({
       active,
     }, 'me-doc-item');
+    const isPublicClassName = classNames({
+      'far fa-eye': item.isPublic,
+      'far fa-eye-slash': !item.isPublic,
+    });
     return (
       <li className={className} onContextMenu={this.contextMenuHandler}>
         <a onClick={this.clickHandler}>
           <header className="text-ellipsis">{item.title}</header>
-          <p>
-            <i className={DocumentTypeIcons[item.type]}></i>
-            <span className="me-doc-time">{moment(item.updateTime).fromNow()}</span>
-          </p>
+          <div className="row me-doc-item-body">
+            <div className="col-6 text-left">
+              <i className={DocumentTypeIcons[item.type] || DocumentTypeIcons.unknown} />
+            </div>
+            <div className="col-6 text-right">
+              <span className="me-doc-time mr-3">{moment(item.updateTime).fromNow()}</span>
+              <i className={isPublicClassName} />
+            </div>
+          </div>
         </a>
       </li>
     );

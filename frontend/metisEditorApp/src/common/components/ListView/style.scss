@@ -11,10 +11,19 @@
     &.active {
       background-color: rgba(86, 61, 124, 0.5) !important;
       color: #fff;
+
+      .me-doc-time {
+        color: #fff;
+      }
     }
 
     &:hover {
       background-color: #ddd
+    }
+
+    .me-doc-item-body {
+      height: 50px;
+      line-height: 50px;
     }
 
     a {
@@ -31,7 +40,6 @@
       }
     }
     .me-doc-time {
-      float: right;
       font-size: .6em;
       color: #666;
     }

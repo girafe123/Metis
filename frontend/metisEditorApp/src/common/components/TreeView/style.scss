@@ -6,11 +6,11 @@
     margin: 0;
 
     li {
-      line-height: 30px;
+      line-height: 50px;
       
       header {
         position: relative;
-        padding: 0 10px 0 45px;
+        padding: 0 30px 0 45px;
         cursor: pointer;
 
         &.active {
@@ -24,16 +24,23 @@
         .me-tree-toggle {
           position: absolute;
           left: 5px;
-          line-height: 30px;
+          line-height: 50px;
           width: 15px;
           text-align: center;
           cursor: pointer;
         }
 
-        > .far {
+        .me-tree-is-public {
+          position: absolute;
+          right: 10px;
+          line-height: 50px;
+        }
+
+        > .fa-folder,
+        > .fa-folder-open {
           position: absolute;
           left: 25px;
-          line-height: 30px;
+          line-height: 50px;
           width: 15px;
         }
       }

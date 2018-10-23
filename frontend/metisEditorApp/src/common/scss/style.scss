@@ -40,6 +40,8 @@ button {
   position: absolute;
   top: 0;
   width: 100%;
+  border-bottom: 1px solid #eee;
+
   button {
     font-size: 16px;
     outline: none
@@ -64,8 +66,14 @@ $i: 12;
   $i: $i - 1;
 }
 
+.text-left {
+  text-align: left;
+}
 .text-center {
   text-align: center;
+}
+.text-right {
+  text-align: right;
 }
 
 .text-ellipsis {
@@ -76,4 +84,39 @@ $i: 12;
 
 .float-right {
   float: right;
+}
+
+$i: 10;
+$step: 5px;
+@while $i > 0 {
+  .pl-#{$i} { 
+    padding-left: $i*$step;
+  }
+  .pr-#{$i} { 
+    padding-right: $i*$step;
+  }
+  .pt-#{$i} { 
+    padding-top: $i*$step;
+  }
+  .pb-#{$i} { 
+    padding-bottom: $i*$step;
+  }
+  $i: $i - 1;
+}
+
+$i: 10;
+@while $i > 0 {
+  .ml-#{$i} { 
+    margin-left: $i*$step;
+  }
+  .mr-#{$i} { 
+    margin-right: $i*$step;
+  }
+  .mt-#{$i} { 
+    margin-top: $i*$step;
+  }
+  .mb-#{$i} { 
+    margin-bottom: $i*$step;
+  }
+  $i: $i - 1;
 }
