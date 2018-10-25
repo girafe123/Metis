@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CodeMirror from 'codemirror';
 import 'codemirror/mode/markdown/markdown';
+import 'codemirror/keymap/sublime';
 import 'codemirror/addon/scroll/simplescrollbars';
 import 'codemirror/addon/scroll/simplescrollbars.css';
 import 'codemirror/lib/codemirror.css';
@@ -12,22 +13,27 @@ export default class Editor extends React.PureComponent {
   static defaultProps = {
     value: '',
     onChange: () => null,
+    onSave: () => null,
   };
 
   static propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func,
+    onSave: PropTypes.func,
   };
 
   hostEle = React.createRef();
 
   componentDidMount() {
-    const { value, onChange } = this.props;
+    const { value, onChange, onSave } = this.props;
     this.editor = CodeMirror(this.hostEle.current, {
       mode: 'markdown',
       value,
       theme: '3024-day',
-      scrollbarStyle: 'simple'
+      scrollbarStyle: 'simple',
+      extraKeys: {
+        'Ctrl-S': () => onSave(),
+      },
     });
     this.editor.on('change', (cm) => {
       const v = cm.getValue();

@@ -63,11 +63,13 @@ class DocPanel extends React.Component {
 
   onSaveHandler = () => {
     const { dispatch } = this.props;
-    const { title, content, id, isPublic } = this.state;
-    dispatch(updateDocument({ title, content, id, isPublic }));
-    this.setState({
-      isDirty: false,
-    });
+    const { title, content, id, isPublic, isDirty } = this.state;
+    if (isDirty) {
+      dispatch(updateDocument({ title, content, id, isPublic }));
+      this.setState({
+        isDirty: false,
+      });
+    }
   }
 
   onDownloadHandler = () => {
@@ -120,7 +122,7 @@ class DocPanel extends React.Component {
           {
             mode === 'preview'
               ? <Previewer value={content} />
-              : <Editor key={doc.id} value={content} onChange={this.onChangeHandler} />
+              : <Editor key={doc.id} value={content} onChange={this.onChangeHandler} onSave={this.onSaveHandler} />
           }
         </Fragment>
       );
