@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import { createMuiTheme } from '@material-ui/core/styles';
 
 import ContextMenuContext from './common/contexts/ContextMenuContext';
 import Snackbar from './common/components/Snackbar';
@@ -14,6 +16,17 @@ import MenuBar from './menuBar';
 
 import { hideMessage } from './common/actions';
 import './common/scss/style.scss';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#563d7c',
+    },
+  },
+  typography: {
+    useNextVariants: true,
+  },
+});
 
 class App extends React.Component {
   state = {
@@ -89,22 +102,24 @@ class App extends React.Component {
     return (
       <Fragment>
         <CssBaseline />
-        <MenuBar />
-        <ContextMenuContext.Provider value={{ showContextMenu: this.showContextMenu }}>
-          <main className="me-main row">
-            <div className="col-2 me-panel">
-              <FolderTreePanel />
-            </div>
-            <div className="col-2 me-panel">
-              <DocListPanel />
-            </div>
-            <div className="col-8 me-panel">
-              <DocPanel />
-            </div>
-          </main>
-        </ContextMenuContext.Provider>
-        { this.renderContextMenu() }
-        { this.renderSnackbar() }
+        <MuiThemeProvider theme={theme}>
+          <MenuBar />
+          <ContextMenuContext.Provider value={{ showContextMenu: this.showContextMenu }}>
+            <main className="me-main row">
+              <div className="col-2 me-panel">
+                <FolderTreePanel />
+              </div>
+              <div className="col-2 me-panel">
+                <DocListPanel />
+              </div>
+              <div className="col-8 me-panel">
+                <DocPanel />
+              </div>
+            </main>
+          </ContextMenuContext.Provider>
+          { this.renderContextMenu() }
+          { this.renderSnackbar() }
+        </MuiThemeProvider>
       </Fragment>
     );
   }

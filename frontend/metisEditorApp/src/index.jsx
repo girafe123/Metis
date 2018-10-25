@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import '@babel/polyfill';
 import '@fortawesome/fontawesome-free/css/all.css';
+import 'typeface-roboto';
 
 import App from './App';
 import rootReducer from './common/reducers';

@@ -95,10 +95,10 @@ class DocListPanel extends React.Component {
       <LoadingBlock loading={showLoading}>
         <div className="me-doc-list-panel">
           <div className="me-toolbar">
-            <IconButton onClick={this.createDocument} disabled={!folder}>
+            <IconButton onClick={this.createDocument} disabled={!folder} color="primary">
               <Icon className="fa fa-plus-circle" fontSize="inherit" />
             </IconButton>
-            <IconButton onClick={this.loadDocuments} disabled={!folder}>
+            <IconButton onClick={this.loadDocuments} disabled={!folder} color="primary">
               <Icon className="fa fa-sync-alt" fontSize="inherit" />
             </IconButton>
           </div>

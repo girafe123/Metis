@@ -16,7 +16,7 @@ const LoadingButton = (props) => {
   return (
     <Tooltip title={tooltip}>
       <span>
-        <IconButton onClick={onClick} disabled={disabled}>
+        <IconButton onClick={onClick} disabled={disabled} color="primary">
           <Icon className={iconClass} fontSize="inherit" />
         </IconButton>
       </span>

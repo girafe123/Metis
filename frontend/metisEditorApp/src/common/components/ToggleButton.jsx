@@ -35,7 +35,7 @@ export default class ToggleButton extends React.PureComponent {
     const activeItem = options[activeIndex];
     return (
       <Tooltip title={activeItem.text}>
-        <IconButton onClick={this.onClickHandler}>
+        <IconButton onClick={this.onClickHandler} color="primary">
           <Icon className={activeItem.icon} fontSize="inherit" />
         </IconButton>
       </Tooltip>

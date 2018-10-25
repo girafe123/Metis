@@ -13,11 +13,11 @@ import LoadingButton from '../common/components/LoadingButton';
 
 const editOptions = [{
   icon: 'fas fa-pencil-alt',
-  value: 'edit',
+  value: 'preview',
   text: '编辑',
 }, {
   icon: 'fas fa-list',
-  value: 'preview',
+  value: 'edit',
   text: '预览',
 }];
 
@@ -85,7 +85,7 @@ export default class ToolBar extends React.PureComponent {
           </div>
           <div className="col-3 me-tool-doc-btns">
             <Tooltip title="导出">
-              <IconButton onClick={onDownload}>
+              <IconButton onClick={onDownload} color="primary">
                 <Icon className="fas fa-download" fontSize="inherit" />
               </IconButton>
             </Tooltip>

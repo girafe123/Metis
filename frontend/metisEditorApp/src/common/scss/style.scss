@@ -10,6 +10,8 @@ button {
 
 .me-app {
   height: 100%;
+  color: rgba(0, 0, 0, 0.87);
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
 .me-main {
@@ -47,11 +49,6 @@ button {
     outline: none
   }
 }
-
-.material-icons {
-  color: $icon-color;
-}
-
 
 .row {
   display: flex;

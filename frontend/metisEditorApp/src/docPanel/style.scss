@@ -1,14 +1,14 @@
 @import '../common/scss/vars';
 
 .me-doc-container {
-  padding: $tool-bar-height 15% 0 15%;
+  padding: $tool-bar-height 10% 0 10%;
 }
 
 .me-tool-bar {
-  width: 70%;
+  width: 80%;
   position: absolute;
   top: 0;
-  left: 15%;
+  left: 10%;
   border-style: solid;
   border-color: #eee;
   border-width: 0 0 1px 0;

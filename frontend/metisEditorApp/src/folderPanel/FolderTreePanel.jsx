@@ -132,10 +132,10 @@ class FolderTreePanel extends React.Component {
       <LoadingBlock loading={showLoading}>
         <div className="me-folder-panel">
           <div className="me-toolbar">
-            <IconButton onClick={this.createRootFolderModal}>
+            <IconButton onClick={this.createRootFolderModal} color="primary">
               <Icon className="fa fa-plus-circle" fontSize="inherit" />
             </IconButton>
-            <IconButton onClick={this.loadFolders}>
+            <IconButton onClick={this.loadFolders} color="primary">
               <Icon className="fa fa-sync-alt" fontSize="inherit" />
             </IconButton>
           </div>
