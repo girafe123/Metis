@@ -8,12 +8,12 @@ from ..models import Document
 class DocumentListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Document
-        fields = ('id', 'title', 'type', 'isPublic')
+        fields = ('id', 'title', 'type', 'isPublic', 'updateTime')
 
 class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Document
-        fields = ('id', 'title', 'updateTime', 'type', 'content', 'isPublic')
+        fields = ('id', 'title', 'updateTime', 'type', 'content', 'isPublic', 'folder')
 
     def create(self, validated_data):
         return DocumentService.createDocument(validated_data, self.context['user'])
@@ -41,7 +41,11 @@ class DocumentDetailView(APIView):
 
     def put(self, request, pk):
         doc = DocumentService.getDocumentById(pk)
-        serializer = DocumentSerializer(doc, data=request.data)
+        data= request.data
+        data['updateTime'] = timezone.now()
+        data['type'] = doc.type
+
+        serializer = DocumentSerializer(doc, data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data)

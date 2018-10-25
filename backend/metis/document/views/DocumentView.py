@@ -13,6 +13,9 @@ def edit(request, docId):
     doc = DocumentService.getDocumentById(docId)
     return render(request, 'document/edit.html', {'document': doc})
 
+def editor(request):
+    return render(request, 'document/editor.html')
+
 def create(request):
     return render(request, 'document/create.html')
 

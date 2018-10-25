@@ -5,5 +5,5 @@ urlpatterns = [
     path('document', DocumentApiView.DocumentView.as_view()),
     path('document/<int:pk>', DocumentApiView.DocumentDetailView.as_view()),
     path('folder', FolderApiView.FolderView.as_view()),
-    re_path(r'folder/(?P<pk>\d)?', FolderApiView.FolderDetailView.as_view()),
+    path('folder/<int:pk>', FolderApiView.FolderDetailView.as_view()),
 ]

@@ -31,7 +31,7 @@ class Document(models.Model):
     createTime = models.DateTimeField('create time')
     updateTime = models.DateTimeField('update time')
     type = models.CharField(max_length=200, blank=True, null=True)
-    content = models.TextField()
+    content = models.TextField(blank=True)
     isDelete = models.BooleanField(default=False)
     isPublic = models.BooleanField(default=False)
     profile = models.OneToOneField(DocumentProfile, on_delete=models.CASCADE, blank=True, null=True)

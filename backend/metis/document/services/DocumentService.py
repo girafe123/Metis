@@ -4,7 +4,7 @@ from ..models import Document, DocumentProfile
 
 def getDocumentList(folderId=None):
     if folderId:
-        return Document.objects.filter(folder=folderId)
+        return Document.objects.filter(folder=folderId).order_by('-createTime')
     return Document.objects.all()
 
 def getDocumentById(id):
@@ -19,6 +19,7 @@ def createDocument(data, user):
                    updateTime=timezone.now(),
                    author=user,
                    type=data['type'],
+                   folder=data['folder'],
                    profile=docProfile)
     doc.save()
     return doc
