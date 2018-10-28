@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import marked from 'marked';
+import Scrollbar from '../Scrollbar';
+
 import './style.scss';
 
 export default class Previewer extends React.PureComponent {
@@ -32,6 +34,10 @@ export default class Previewer extends React.PureComponent {
   }
 
   render() {
-    return <div ref={this.hostEle} className="me-previewer" />;
+    return (
+      <Scrollbar>
+        <div ref={this.hostEle} className="me-previewer" />
+      </Scrollbar>
+    );
   }
 }

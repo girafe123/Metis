@@ -50,7 +50,7 @@ class DocPanel extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { dispatch, doc } = this.props;
-    if (prevState.id && doc.id !== prevState.id && prevState.isDirty) {
+    if (doc && prevState.id && doc.id !== prevState.id && prevState.isDirty) {
       const { title, content, id, isPublic } = prevState;
       dispatch(updateDocument({ title, content, id, isPublic }));
     }

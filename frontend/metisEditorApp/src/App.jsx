@@ -87,7 +87,7 @@ class App extends React.Component {
       <Snackbar
         anchorOrigin={{
           vertical: 'top',
-          horizontal: 'center',
+          horizontal: 'right',
         }}
         open={snackbarMessage.show}
         autoHideDuration={6000}
