@@ -40,3 +40,9 @@ class Document(models.Model):
     def __str__(self):
         return self.title
 
+class Attachment(models.Model):
+    name = models.CharField(max_length=255)
+    file = models.FileField()
+    createTime = models.DateTimeField('create time')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    document = models.ForeignKey(Document, on_delete=models.CASCADE, blank=True, null=True)
