@@ -9,6 +9,7 @@ import EmptyPanel from '../common/components/EmptyPanel';
 import { downloadFile } from '../common/utils/utils';
 
 import { switchMode, updateDocument } from './actions';
+import AttachmentDialog from './AttachmentDialog';
 
 import './style.scss';
 
@@ -21,6 +22,7 @@ class DocPanel extends React.Component {
         id: props.doc.id,
         isPublic: props.doc.isPublic,
         isDirty: false,
+        showAttachments: false,
       };
     }
 
@@ -33,14 +35,26 @@ class DocPanel extends React.Component {
     id: '',
     isPublic: false,
     isDirty: false,
+    showAttachments: false,
   };
 
-  onChangeHandler = (v) => {
-    this.setState({
-      content: v,
-      isDirty: true,
+  componentDidMount() {
+    window.addEventListener('beforeunload ', (e) => {
+      const event = e || window.event;
+      if (this.state.isDirty && event) {
+        e.returnValue = '有未同步的改动请先提交';
+      }
+      return '有未同步的改动请先提交';
     });
-  };
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { dispatch, doc } = this.props;
+    if (prevState.id && doc.id !== prevState.id && prevState.isDirty) {
+      const { title, content, id, isPublic } = prevState;
+      dispatch(updateDocument({ title, content, id, isPublic }));
+    }
+  }
 
   onSwitchHandler = (v) => {
     const { dispatch } = this.props;
@@ -78,28 +92,28 @@ class DocPanel extends React.Component {
     downloadFile(title, content, type);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { dispatch, doc } = this.props;
-    if (prevState.id && doc.id !== prevState.id && prevState.isDirty) {
-
-      const { title, content, id, isPublic } = prevState;
-      dispatch(updateDocument({ title, content, id, isPublic }));
-    }
-  }
-
-  componentDidMount() {
-    window.addEventListener('beforeunload ', (e) => {
-      const event = e || window.event;
-      if (this.state.isDirty && event) {
-        e.returnValue = '有未同步的改动请先提交';
-      }
-      return '有未同步的改动请先提交';
+  onShowAttachmentDialogHandler = () => {
+    this.setState({
+      showAttachments: true,
     });
   }
 
+  onCloseAttachmentDialogHandler = () => {
+    this.setState({
+      showAttachments: false,
+    });
+  }
+
+  onChangeHandler = (v) => {
+    this.setState({
+      content: v,
+      isDirty: true,
+    });
+  };
+
   render() {
     const { mode, isSaveLoading, isDocLoading, doc } = this.props;
-    const { title, content, isDirty, isPublic } = this.state;
+    const { title, content, isDirty, isPublic, showAttachments, id } = this.state;
 
     let inner;
     if (!doc) {
@@ -118,11 +132,19 @@ class DocPanel extends React.Component {
             isPublic={isPublic}
             onIsPublicChange={this.onIsPublicChangeHandler}
             onDownload={this.onDownloadHandler}
+            onShowAttachmentDialog={this.onShowAttachmentDialogHandler}
           />
           {
             mode === 'preview'
               ? <Previewer value={content} />
               : <Editor key={doc.id} value={content} onChange={this.onChangeHandler} onSave={this.onSaveHandler} />
+          }
+          {
+            showAttachments ? (
+              <AttachmentDialog
+                onClose={this.onCloseAttachmentDialogHandler}
+                documentId={id}
+               />) : null
           }
         </Fragment>
       );

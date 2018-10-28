@@ -31,6 +31,9 @@ export default class ToolBar extends React.PureComponent {
     mode: 'edit',
     isSaveLoading: false,
     isSaveDisabled: false,
+    isPublic: false,
+    onIsPublicChange: () => null,
+    onShowAttachmentDialog: () => null,
   };
 
   static propTypes = {
@@ -42,6 +45,9 @@ export default class ToolBar extends React.PureComponent {
     mode: PropTypes.string,
     isSaveLoading: PropTypes.bool,
     isSaveDisabled: PropTypes.bool,
+    isPublic: PropTypes.bool,
+    onIsPublicChange: PropTypes.func,
+    onShowAttachmentDialog: PropTypes.func,
   };
 
   onTitleChange = (e) => {
@@ -60,7 +66,7 @@ export default class ToolBar extends React.PureComponent {
   };
 
   render() {
-    const { title, mode, isSaveLoading, onSwitch, isSaveDisabled, isPublic, onDownload } = this.props;
+    const { title, mode, isSaveLoading, onSwitch, isSaveDisabled, isPublic, onDownload, onShowAttachmentDialog } = this.props;
     return (
       <div className="me-tool-bar">
         <div className="row">
@@ -84,6 +90,11 @@ export default class ToolBar extends React.PureComponent {
             />
           </div>
           <div className="col-3 me-tool-doc-btns">
+            <Tooltip title="图片">
+              <IconButton onClick={onShowAttachmentDialog} color="primary">
+                <Icon className="far fa-image" fontSize="inherit" />
+              </IconButton>
+            </Tooltip>
             <Tooltip title="导出">
               <IconButton onClick={onDownload} color="primary">
                 <Icon className="fas fa-download" fontSize="inherit" />

@@ -55,7 +55,7 @@ export default class FolderFormDialog extends React.PureComponent {
     return (
       <Dialog
         open
-        onClose={this.closeFolderModal}
+        onClose={onClose}
         fullWidth
       >
         <DialogTitle>{title}</DialogTitle>

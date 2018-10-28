@@ -5,3 +5,4 @@ dist
 package-lock.json
 /*.sublime-project
 /*.sublime-workspace
+upload
