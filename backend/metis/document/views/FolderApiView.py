@@ -15,7 +15,7 @@ class FolderSerializer(serializers.ModelSerializer):
 
 class FolderView(APIView):
     def get(self, request):
-        result = FolderService.getFolderList()
+        result = FolderService.getFolderList(request.user)
         return JsonResponse(result, safe=False)
 
     def post(self, request):

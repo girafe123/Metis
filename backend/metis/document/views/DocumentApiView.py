@@ -21,7 +21,7 @@ class DocumentSerializer(serializers.ModelSerializer):
 class DocumentView(APIView):
     def get(self, request):
         folder = request.query_params.get('folder', None)
-        doc_list = DocumentService.getDocumentList(folder)
+        doc_list = DocumentService.getDocumentList(request.user, folder)
         serializer = DocumentListSerializer(doc_list, many=True)
         return JsonResponse(serializer.data, safe=False)
 

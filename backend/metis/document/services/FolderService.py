@@ -2,16 +2,16 @@ from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from ..models import Folder
 
-def getFolderList(folderId = None):
+def getFolderList(author, folderId = None):
     if folderId:
-        folderList = Folder.objects.filter(parentId=folderId, isDelete=False).order_by('-createTime')
+        folderList = Folder.objects.filter(parentId=folderId, isDelete=False, author=author).order_by('-createTime')
     else:
-        folderList = Folder.objects.filter(isRoot=True, isDelete=False).order_by('-createTime')
+        folderList = Folder.objects.filter(isRoot=True, isDelete=False, author=author).order_by('-createTime')
 
     result = []
 
     for folder in folderList:
-        subFolder = getFolderList(folder.id)
+        subFolder = getFolderList(author, folder.id)
         dict = folder.toDict()
         dict['children'] = subFolder
         result.append(dict)

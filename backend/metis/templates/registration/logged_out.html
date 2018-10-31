@@ -1,0 +1,14 @@
+{% extends "document/base.html" %}
+{% block title %}Metis-Loggedout{% endblock %}
+
+{% block main %}
+<div class="card">
+    <div class="card-body text-center">
+        <h1 class="text-muted">登出成功</h1>
+
+        <div>
+            <a href="{% url 'login'%}" class="btn btn-link">去登录</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

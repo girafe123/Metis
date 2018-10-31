@@ -56,7 +56,7 @@ ROOT_URLCONF = 'metis.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['./templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -138,3 +138,5 @@ FILE_UPLOAD_HANDLERS = {
 FILE_UPLOAD_TEMP_DIR = os.path.join(BASE_DIR, 'upload/')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'upload/')
 MEDIA_URL = '/upload/'
+
+LOGIN_REDIRECT_URL = '/'
