@@ -5,7 +5,6 @@ from django.core.files import File
 from .DocumentService import getDocumentById
 from ..models import Attachment
 
-
 def createAttachment(file, user, documentId):
     doc = getDocumentById(documentId)
     attachment = Attachment(name=file.name, file=File(file.file), createTime=timezone.now(), document=doc, author=user)

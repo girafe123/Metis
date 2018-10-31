@@ -1,10 +1,15 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.views import generic
+from ..models import Document
 from ..services import DocumentService
 
-def index(request):
-    doc_list = DocumentService.getDocumentList()
-    return render(request, 'document/index.html', {'doc_list': doc_list})
+class DocListView(generic.ListView):
+    model = Document
+    context_object_name = 'doc_list'
+    queryset = DocumentService.getPublicDocumentList()
+    template_name = 'document/index.html'
+    paginate_by = 10
 
 @login_required
 def editor(request):
@@ -12,4 +17,7 @@ def editor(request):
 
 def detail(request, docId):
     doc = DocumentService.getDocumentById(docId)
-    return render(request, 'document/detail.html', {'document': doc})
+    return render(request, 'document/detail.html', {
+        'document': doc,
+        'content': DocumentService.convertMarkdown(doc.content)
+    })

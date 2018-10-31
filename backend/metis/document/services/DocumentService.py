@@ -1,12 +1,16 @@
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+import markdown
 
 from ..models import Document, DocumentProfile
 
 def getDocumentList(folderId=None):
     if folderId:
-        return Document.objects.filter(folder=folderId).order_by('-createTime')
-    return Document.objects.all()
+        return Document.objects.filter(folder=folderId, isDelete=False).order_by('-createTime')
+    return Document.objects.filter(isDelete=False)
+
+def getPublicDocumentList():
+    return Document.objects.filter(isPublic=True, isDelete=False).order_by('-createTime')
 
 def getDocumentById(id):
     return get_object_or_404(Document, pk=id)
@@ -35,4 +39,11 @@ def updateDocument(id, data):
 
 def deleteDocument(id):
     doc = getDocumentById(id)
-    doc.delete()
+    if doc.isDelete:
+        doc.delete()
+    else:
+        doc.isDelete = True
+        doc.save()
+
+def convertMarkdown(content):
+    return  markdown.markdown(content)

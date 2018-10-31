@@ -6,9 +6,8 @@
     <p>
         <span>{{document.create_time}}</span>
         <span>{{document.update_time}}</span>
-        <a href="{% url 'document:edit' document.id %}">edit</a>
     </p>
     <div>
-        {{document.content}}
+        {{content|safe}}
     </div>
 {% endblock %}

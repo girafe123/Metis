@@ -4,9 +4,9 @@ from ..models import Folder
 
 def getFolderList(folderId = None):
     if folderId:
-        folderList = Folder.objects.filter(parentId=folderId)
+        folderList = Folder.objects.filter(parentId=folderId, isDelete=False).order_by('-createTime')
     else:
-        folderList = Folder.objects.filter(isRoot=True)
+        folderList = Folder.objects.filter(isRoot=True, isDelete=False).order_by('-createTime')
 
     result = []
 
@@ -40,5 +40,9 @@ def createFolder(data, author):
     return folder
 
 def deleteFolder(id):
-    doc = getFolderById(id)
-    doc.delete()
+    folder = getFolderById(id)
+    if folder.isDelete:
+        folder.delete()
+    else:
+        folder.isDelete = True
+        folder.save()
