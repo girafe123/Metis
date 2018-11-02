@@ -30,11 +30,16 @@ export default class AttachmentDialog extends React.PureComponent {
     });
   }
 
-  onUploadHandler = (formData) => {
+  onUploadHandler = (files) => {
     const { documentId } = this.props;
     this.setState({
       uploading: true,
     });
+
+    const formData = new FormData();
+    for (let file of files) {
+      formData.append('attachments', file, file.name);
+    }
     uploadAttachment(documentId, formData).then((img) => {
       this.setState(update(this.state, {
         uploading: { $set: false },

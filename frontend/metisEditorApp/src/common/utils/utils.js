@@ -28,3 +28,26 @@ export function downloadFile(name, content, type) {
   link.click();
   document.body.removeChild(link);
 }
+
+function getFileName(str) {
+  const arr = str.split('.');
+  if (arr.length > 1) {
+    arr.pop();
+    return arr.join('.');
+  }
+
+  return arr[0];
+}
+export function readFile(file) {
+  const fileReader = new FileReader();
+  return new Promise((resolve) => {
+    fileReader.onload = () => {
+      resolve({
+        title: getFileName(file.name),
+        content: fileReader.result,
+      });
+    };
+
+    fileReader.readAsText(file);
+  });
+}

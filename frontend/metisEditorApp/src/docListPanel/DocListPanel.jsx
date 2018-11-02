@@ -9,9 +9,11 @@ import LoadingBlock from '../common/components/LoadingBlock';
 import EmptyPanel from '../common/components/EmptyPanel';
 import ContextMenuContext from '../common/contexts/ContextMenuContext';
 import ConfirmDialog from '../common/components/ConfirmDialog';
+import FileUpload from '../common/components/FileUpload';
 
 import { getDocument, createDocument, getDocuments, deleteDocument } from './actions';
 import { DocumentType } from '../common/utils/Enums';
+import { readFile } from '../common/utils/utils';
 
 import './style.scss';
 
@@ -57,6 +59,20 @@ class DocListPanel extends React.Component {
     dispatch(getDocuments(folder.id));
   }
 
+  importDocument = (files) => {
+    const { dispatch, folder } = this.props;
+
+    readFile(files[0]).then(({ title, content }) => {
+      dispatch(createDocument({
+        title,
+        content,
+        type: DocumentType.Markdown,
+        isPublic: false,
+        folder: folder.id,
+      }));
+    });
+  }
+
   getContextMenuOptions = node => [
     { label: '删除文档', action: this.deleteDocument(node) },
   ];
@@ -91,6 +107,7 @@ class DocListPanel extends React.Component {
 
   render() {
     const { docId, list, showLoading, folder } = this.props;
+
     return (
       <LoadingBlock loading={showLoading}>
         <div className="me-doc-list-panel">
@@ -98,6 +115,7 @@ class DocListPanel extends React.Component {
             <IconButton onClick={this.createDocument} disabled={!folder} color="primary">
               <Icon className="fa fa-plus-circle" fontSize="inherit" />
             </IconButton>
+            <FileUpload icon="fas fa-file-import" onUpload={this.importDocument} disabled={!folder} text="导入" />
             <IconButton onClick={this.loadDocuments} disabled={!folder} color="primary">
               <Icon className="fa fa-sync-alt" fontSize="inherit" />
             </IconButton>

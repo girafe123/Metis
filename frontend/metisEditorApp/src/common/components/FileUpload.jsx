@@ -34,11 +34,9 @@ export default class FileUpload extends React.Component {
     e.preventDefault();
     const { onUpload } = this.props;
     const dom = this.fileInput.current;
-    const formData = new FormData();
-    for (let file of dom.files) {
-      formData.append('attachments', file, file.name);
-    }
-    onUpload(formData);
+    const result = dom.files;
+    onUpload(result);
+    dom.value = '';
   }
 
   onClickHandler = () => {
