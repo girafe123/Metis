@@ -4,10 +4,10 @@ import markdown
 
 from ..models import Document, DocumentProfile
 
-def getDocumentList(author, folderId=None):
+def getDocumentList(author, folderId=None, isDelete=False):
     if folderId:
-        return Document.objects.filter(folder=folderId, isDelete=False, author=author).order_by('-createTime')
-    return Document.objects.filter(isDelete=False, author=author)
+        return Document.objects.filter(folder=folderId, isDelete=isDelete, author=author).order_by('-createTime')
+    return Document.objects.filter(isDelete=isDelete, author=author)
 
 def getPublicDocumentList():
     return Document.objects.filter(isPublic=True, isDelete=False).order_by('-createTime')
