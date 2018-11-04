@@ -6,20 +6,12 @@ class Folder(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     createTime = models.DateTimeField('create time')
     updateTime = models.DateTimeField('update time')
-    isRoot = models.BooleanField(default=True)
     parentId = models.IntegerField(blank=True, null=True)
     isDelete = models.BooleanField(default=False)
     isPublic = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
-
-    def toDict(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'isPublic': self.isPublic,
-        }
 
 class DocumentProfile(models.Model):
     viewCount = models.IntegerField(default=0)

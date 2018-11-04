@@ -7,7 +7,7 @@ from ..services import DocumentService
 class DocListView(generic.ListView):
     model = Document
     context_object_name = 'doc_list'
-    queryset = DocumentService.getPublicDocumentList()
+    queryset = DocumentService.getDocumentList(isDelete=False, isPublic=True)
     template_name = 'document/index.html'
     paginate_by = 10
 
