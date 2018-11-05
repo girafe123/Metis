@@ -19,6 +19,10 @@ const store = createStore(rootReducer,
       documentList: [],
       currentFolder: null,
       currentDocument: null,
+      recycleBin: {
+        folders: [],
+        documents: [],
+      },
     },
     editorState: {
       mode: 'edit',

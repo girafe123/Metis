@@ -79,6 +79,14 @@ $i: 12;
   white-space: nowrap;
 }
 
+.clearfix {
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+
 .float-right {
   float: right;
 }
@@ -120,4 +128,9 @@ $i: 10;
 
 .me-hidden {
   display: none !important;
+}
+
+.me-ctx-item {
+  min-width: 100px;
+  text-align: center;
 }

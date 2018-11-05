@@ -7,6 +7,7 @@ import {
 import { reducer as docListPanelReducer } from '../../docListPanel';
 import { reducer as docPanelReducer } from '../../docPanel';
 import { reducer as folderPanelReducer } from '../../folderPanel';
+import { reducer as recycleBinReducer } from '../../recycleBin';
 
 function commonReducer(state = {}, action) {
   switch (action.type) {
@@ -44,5 +45,6 @@ export default function rootReducer(state = {}, action) {
   newState = docListPanelReducer(newState, action);
   newState = docPanelReducer(newState, action);
   newState = folderPanelReducer(newState, action);
+  newState = recycleBinReducer(newState, action);
   return newState;
 }

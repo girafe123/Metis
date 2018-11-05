@@ -8,10 +8,10 @@
   box-shadow: 0 0.5rem 1rem rgba(0,0,0,.05), inset 0 -1px 0 rgba(0,0,0,.1);
   color: #fff;
   padding: 0 20px;
-  
+  line-height: $menu-bar-height;
+
   .me-logo {
     display: inline-block;
-    line-height: $menu-bar-height;
     font-size: 24px;
   }
 }

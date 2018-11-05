@@ -69,6 +69,7 @@ class App extends React.Component {
             contextMenu.options.map(option => (
               <MenuItem
                 key={option.label}
+                className='me-ctx-item'
                 onClick={() => {
                   option.action();
                   this.closeContextMenu();
