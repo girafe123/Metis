@@ -39,13 +39,14 @@ class DocPanel extends React.Component {
   };
 
   componentDidMount() {
-    window.addEventListener('beforeunload ', (e) => {
+    window.onbeforeunload = (e) => {
       const event = e || window.event;
       if (this.state.isDirty && event) {
         e.returnValue = '有未同步的改动请先提交';
+        return '有未同步的改动请先提交';
       }
-      return '有未同步的改动请先提交';
-    });
+      return null
+    };
   }
 
   componentDidUpdate(prevProps, prevState) {
