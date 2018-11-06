@@ -30,6 +30,7 @@ const store = createStore(rootReducer,
       isDocumentListLoading: false,
       isCurrentDocmentLoading: false,
       isCurrentDocumentSaving: false,
+      isRecycleBinLoading: false,
       message: {
         text: '',
         type: 'info',

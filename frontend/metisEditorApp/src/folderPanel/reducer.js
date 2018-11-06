@@ -9,23 +9,25 @@ import {
   TOGGLE_FOLDERS_LOADING,
 } from './actions';
 import { makeNodePath, makeCommandsPush,
-  makeCommandsDelete, makeCommandsUpdate } from './utils';
+  makeCommandsDelete, makeCommandsUpdate, makeFolderTree } from './utils';
 
 function editorReducer(state = {}, action) {
   switch (action.type) {
-    case GET_FOLDERS_SUCCEEDED:
+    case GET_FOLDERS_SUCCEEDED: {
+      const folders = action.payload.folders.filter(item => !item.isDelete);
       return update(state, {
         folderList: {
-          $set: action.payload.folders,
+          $set: makeFolderTree(folders),
         },
       });
+    }
     case CREATE_FOLDER_SUCCEEDED: {
       const { folder } = action.payload;
       folder.children = [];
       if (!folder.parentId) {
         return update(state, {
           folderList: {
-            $push: [folder],
+            $unshift: [folder],
           },
         });
       }

@@ -1,0 +1,32 @@
+.me-recyle-bin {
+  text-align: center;
+  height: 315px;
+  overflow: auto;
+
+  p {
+    margin: 0;
+  }
+
+  i {
+    font-size: 32px;
+  }
+
+  .me-folder-tile {
+    padding: 5px;
+    width: 20%;
+    margin: 10px 5% 0 0;
+    float: left;
+    cursor: pointer;
+    display: block;
+    border: 1px solid rgba(0,0,0,0);
+
+    &.active {
+      border: 1px solid rgba(86, 61, 124, 0.5);
+    }
+
+    &:hover {
+      background-color: #eee;
+    }
+  }
+}
+

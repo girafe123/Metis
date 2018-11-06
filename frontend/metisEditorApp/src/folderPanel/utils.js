@@ -95,3 +95,12 @@ export function makeCommandsUpdate(path, folder) {
 
   return result;
 }
+
+export function makeFolderTree(folders, parentId = null) {
+  const result = folders.filter(item => item.parentId === parentId);
+
+  result.forEach((folder) => {
+    folder.children = makeFolderTree(folders, folder.id);
+  });
+  return result;
+}

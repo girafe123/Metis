@@ -6,7 +6,6 @@ import {
 import {
   getFolders,
   createFolder,
-  deleteFolder,
   updateFolder,
 } from '../common/services/http';
 import {
@@ -26,7 +25,7 @@ import { MessageType } from '../common/utils/Enums';
 function* getFoldersList() {
   try {
     yield put(toggleFoldersLoading(true));
-    const folders = yield call(getFolders);
+    const folders = yield call(getFolders, 'f');
     yield put({
       type: GET_FOLDERS_SUCCEEDED,
       payload: {
@@ -61,7 +60,10 @@ function* createFolderHandler(action) {
 function* deleteFolderHandler(action) {
   try {
     yield put(toggleFoldersLoading(true));
-    yield call(deleteFolder, action.payload.folderId);
+    yield call(updateFolder, {
+      id: action.payload.folderId,
+      isDelete: true,
+    });
     yield put({
       type: DELETE_FOLDER_SUCCEEDED,
       payload: {

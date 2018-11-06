@@ -7,7 +7,7 @@ import {
   getDocuments,
   getDocument,
   createDocument,
-  deleteDocument,
+  updateDocument,
 } from '../common/services/http';
 import {
   GET_DOCUMENT_LIST,
@@ -29,7 +29,7 @@ const { toggleDocumentLoading } = docPanelActions;
 function* getDocumentList(action) {
   try {
     yield put(toggleDocumentsLoading(true));
-    const documentList = yield call(getDocuments, action.payload.folderId);
+    const documentList = yield call(getDocuments, action.payload.folderId, 'f');
     yield put({
       type: GET_DOCUMENT_LIST_SUCCEEDED,
       payload: {
@@ -80,7 +80,10 @@ function* createDocumentHandler(action) {
 
 function* deleteDocumentHandler(action) {
   try {
-    yield call(deleteDocument, action.payload.docId);
+    const newDocument = yield call(updateDocument, {
+      id: action.payload.docId,
+      isDelete: true,
+    });
     yield put({
       type: DELETE_DOCUMENT_SUCCEEDED,
       payload: {

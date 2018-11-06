@@ -1,16 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
-
 import TreeView from '../common/components/TreeView';
 import LoadingBlock from '../common/components/LoadingBlock';
 import EmptyPanel from '../common/components/EmptyPanel';
 import ConfirmDialog from '../common/components/ConfirmDialog';
+import IconButtonWithTip from '../common/components/IconButtonWithTip';
 import ContextMenuContext from '../common/contexts/ContextMenuContext';
+
 import FolderFormDialog from './FolderFormDialog';
-import { getFolders, createFolder, deleteFolder, updateFolder, setActiveFolder } from './actions';
+import RecycleBinModal from '../recycleBin';
+
+import { getFolders, createFolder, updateFolder, setActiveFolder, deleteFolder } from './actions';
 
 import './style.scss';
 
@@ -19,6 +20,7 @@ class FolderTreePanel extends React.Component {
     editingFolderModel: null,
     title: '',
     confirmDialog: null,
+    showRecycleBinModal: false,
   }
 
   componentDidMount() {
@@ -64,7 +66,7 @@ class FolderTreePanel extends React.Component {
   deleteFolder = folder => () => {
     this.setState({
       confirmDialog: {
-        id: folder.id,
+        folder,
         msg: `确定要删除 ${folder.name} 吗?`,
       },
     });
@@ -98,7 +100,8 @@ class FolderTreePanel extends React.Component {
 
   onConfirmDialogOK = () => {
     const { dispatch } = this.props;
-    dispatch(deleteFolder(this.state.confirmDialog.id));
+    const { confirmDialog: { folder } } = this.state;
+    dispatch(deleteFolder(folder.id));
     this.onConfirmDialogCancel();
   };
 
@@ -108,13 +111,26 @@ class FolderTreePanel extends React.Component {
     });
   };
 
+  showRecycleBinModal = () => {
+    this.setState({
+      showRecycleBinModal: true,
+    });
+  };
+
+  closeRecycleBinModal = () => {
+    this.setState({
+      showRecycleBinModal: false,
+    });
+  };
+
   renderConfirmDialog() {
-    if (this.state.confirmDialog) {
+    const { confirmDialog } = this.state;
+    if (confirmDialog) {
       return (
         <ConfirmDialog
           open
           title="警告"
-          message={this.state.confirmDialog.msg}
+          message={confirmDialog.msg}
           onOk={this.onConfirmDialogOK}
           onCancel={this.onConfirmDialogCancel}
         />
@@ -124,30 +140,44 @@ class FolderTreePanel extends React.Component {
     return null;
   }
 
+  renderFolderFormDialog() {
+    const { editingFolderModel, title } = this.state;
+
+    if (editingFolderModel) {
+      return (
+        <FolderFormDialog
+          onClose={this.closeFolderModal}
+          onSubmit={this.submitFolderModal}
+          folder={editingFolderModel}
+          title={title}
+        />
+      );
+    }
+
+    return null;
+  }
+
+  renderRecycleBinModal() {
+    const { showRecycleBinModal } = this.state;
+    if (showRecycleBinModal) {
+      return <RecycleBinModal onClose={this.closeRecycleBinModal} />;
+    }
+
+    return null;
+  }
+
   render() {
     const { folders, showLoading, currentFolder } = this.props;
-    const { editingFolderModel, title } = this.state;
 
     return (
       <LoadingBlock loading={showLoading}>
         <div className="me-folder-panel">
           <div className="me-toolbar">
-            <IconButton onClick={this.createRootFolderModal} color="primary">
-              <Icon className="fa fa-plus-circle" fontSize="inherit" />
-            </IconButton>
-            <IconButton onClick={this.loadFolders} color="primary">
-              <Icon className="fa fa-sync-alt" fontSize="inherit" />
-            </IconButton>
+            <IconButtonWithTip onClick={this.showRecycleBinModal} icon="fas fa-recycle" title="回收站" />
+            <IconButtonWithTip onClick={this.createRootFolderModal} icon="fa fa-plus-circle" title="新建文件夹" />
+            <IconButtonWithTip onClick={this.loadFolders} icon="fa fa-sync-alt" title="刷新" />
           </div>
-          {
-            editingFolderModel ? (
-              <FolderFormDialog
-                onClose={this.closeFolderModal}
-                onSubmit={this.submitFolderModal}
-                folder={editingFolderModel}
-                title={title}
-              />) : null
-          }
+          { this.renderFolderFormDialog() }
           <ContextMenuContext.Consumer>
             {
               ({ showContextMenu }) => (
@@ -165,6 +195,7 @@ class FolderTreePanel extends React.Component {
           </ContextMenuContext.Consumer>
         </div>
         { this.renderConfirmDialog() }
+        { this.renderRecycleBinModal() }
       </LoadingBlock>
     );
   }
