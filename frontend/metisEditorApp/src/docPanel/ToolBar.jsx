@@ -10,6 +10,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import ToggleButton from '../common/components/ToggleButton';
 import LoadingButton from '../common/components/LoadingButton';
+import IconButtonWithTip from '../common/components/IconButtonWithTip';
 
 const editOptions = [{
   icon: 'fas fa-pencil-alt',
@@ -90,16 +91,8 @@ export default class ToolBar extends React.PureComponent {
             />
           </div>
           <div className="col-3 me-tool-doc-btns">
-            <Tooltip title="图片">
-              <IconButton onClick={onShowAttachmentDialog} color="primary">
-                <Icon className="far fa-image" fontSize="inherit" />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="导出">
-              <IconButton onClick={onDownload} color="primary">
-                <Icon className="fas fa-download" fontSize="inherit" />
-              </IconButton>
-            </Tooltip>
+            <IconButtonWithTip onClick={onShowAttachmentDialog} icon="far fa-image" title="图片" />
+            <IconButtonWithTip onClick={onDownload} icon="fas fa-download" title="导出" />
             <LoadingButton icon="far fa-save" text="保存" loading={isSaveLoading} onClick={this.onSave} disabled={isSaveDisabled} />
             <ToggleButton options={editOptions} value={mode} onChange={onSwitch} />
           </div>

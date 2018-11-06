@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
-import Tooltip from '@material-ui/core/Tooltip';
+
+import IconButtonWithTip from './IconButtonWithTip';
 
 export default class ToggleButton extends React.PureComponent {
   static defaultProps = {
@@ -34,11 +33,7 @@ export default class ToggleButton extends React.PureComponent {
     const activeIndex = this.findActive();
     const activeItem = options[activeIndex];
     return (
-      <Tooltip title={activeItem.text}>
-        <IconButton onClick={this.onClickHandler} color="primary">
-          <Icon className={activeItem.icon} fontSize="inherit" />
-        </IconButton>
-      </Tooltip>
+      <IconButtonWithTip onClick={this.onClickHandler} icon={activeItem.icon} title={activeItem.text} />
     );
   }
 }

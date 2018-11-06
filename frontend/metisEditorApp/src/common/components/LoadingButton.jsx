@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
-import Tooltip from '@material-ui/core/Tooltip';
+import IconButtonWithTip from './IconButtonWithTip';
 
 const LoadingButton = (props) => {
   const { loading, icon, onClick, disabled, text } = props;
@@ -14,13 +12,7 @@ const LoadingButton = (props) => {
   });
   const tooltip = loading ? '同步中' : text;
   return (
-    <Tooltip title={tooltip}>
-      <span>
-        <IconButton onClick={onClick} disabled={disabled} color="primary">
-          <Icon className={iconClass} fontSize="inherit" />
-        </IconButton>
-      </span>
-    </Tooltip>
+    <IconButtonWithTip onClick={onClick} icon={iconClass} disabled={disabled} title={tooltip} />
   );
 };
 

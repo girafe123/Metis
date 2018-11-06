@@ -1,15 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import IconButton from '@material-ui/core/IconButton';
-import Icon from '@material-ui/core/Icon';
-
 import ListView from '../common/components/ListView';
 import LoadingBlock from '../common/components/LoadingBlock';
 import EmptyPanel from '../common/components/EmptyPanel';
 import ContextMenuContext from '../common/contexts/ContextMenuContext';
 import ConfirmDialog from '../common/components/ConfirmDialog';
 import FileUpload from '../common/components/FileUpload';
+import IconButtonWithTip from '../common/components/IconButtonWithTip';
 
 import { getDocument, createDocument, getDocuments, deleteDocument } from './actions';
 import { DocumentType } from '../common/utils/Enums';
@@ -112,13 +110,9 @@ class DocListPanel extends React.Component {
       <LoadingBlock loading={showLoading}>
         <div className="me-doc-list-panel">
           <div className="me-toolbar">
-            <IconButton onClick={this.createDocument} disabled={!folder} color="primary">
-              <Icon className="fa fa-plus-circle" fontSize="inherit" />
-            </IconButton>
+            <IconButtonWithTip onClick={this.createDocument} icon="fa fa-plus-circle" title="新建文档" disabled={!folder} />
             <FileUpload icon="fas fa-file-import" onUpload={this.importDocument} disabled={!folder} text="导入" />
-            <IconButton onClick={this.loadDocuments} disabled={!folder} color="primary">
-              <Icon className="fa fa-sync-alt" fontSize="inherit" />
-            </IconButton>
+            <IconButtonWithTip onClick={this.loadDocuments} icon="fa fa-sync-alt" title="刷新" disabled={!folder} />
           </div>
           {
             list.length > 0 ? (
