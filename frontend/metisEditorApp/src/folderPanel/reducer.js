@@ -39,10 +39,30 @@ function editorReducer(state = {}, action) {
     case DELETE_FOLDER_SUCCEEDED: {
       const { folderId } = action.payload;
       const path = makeNodePath(state.folderList, folderId);
-
-      return update(state, {
+      let result = update(state, {
         folderList: makeCommandsDelete(path),
       });
+
+      if (state.currentFolder && state.currentFolder.id === folderId) {
+        result = update(result, {
+          currentFolder: {
+            $set: null,
+          },
+          documentList: {
+            $set: [],
+          },
+        });
+      }
+
+      if (state.currentDocument && state.currentDocument.folder === folderId) {
+        result = update(result, {
+          currentDocument: {
+            $set: null,
+          },
+        });
+      }
+
+      return result;
     }
 
     case UPDATE_FOLDER_SUCCEEDED: {

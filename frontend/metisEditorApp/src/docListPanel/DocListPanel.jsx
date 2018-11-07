@@ -22,7 +22,7 @@ class DocListPanel extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { folder } = this.props;
-    if (prevProps.folder !== folder) {
+    if (folder && prevProps.folder !== folder ) {
       this.loadDocuments();
     }
   }
